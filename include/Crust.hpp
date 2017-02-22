@@ -13,7 +13,7 @@ class Crust {
 	Grid *grid;
 	vector<Field<real>*> fields;
 	vector<int> fieldStatus;
-	
+
 	public:
 	Crust(vector<int>, vector<real>);
 	~Crust();
@@ -21,6 +21,8 @@ class Crust {
 	void syncFieldsGrid();
 	void addField(string);
 	void deleteField(string);
+
+	
 };
 
 #endif

@@ -29,6 +29,7 @@ int main (int argc, char *argv[]) {
 	cr = new Crust(nx, L);
 	cr->addField("test");
 	cr->addField("test2");
+	*(cr->getField("test")) = *(cr->getField("test2"));
 	cr->deleteField("test");
 	delete cr;
 	cr = new Crust(nx, L);
@@ -40,4 +41,3 @@ int main (int argc, char *argv[]) {
 
 	return 0;
 }
-

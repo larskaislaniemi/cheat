@@ -59,12 +59,34 @@ template <class T_fval>
 void Field<T_fval>::syncGrid() {
 	/* TODO: implement
 	   - check if grid version matches field version
-	   - if not, interpolate field data from old 
+	   - if not, interpolate field data from old
 	     grid (stored where??) to new grid
 	*/
 
 	// for now, we assume everything's just fine
 	this->gridVersion = grid->getVersion();
 }
+
+template <class T_fval>
+T_fval Field<T_fval>::getValue(int idx) const {
+	return this->values[idx];
+}
+
+template <class T_fval>
+void Field<T_fval>::setValue(int idx, T_fval val) {
+	this->values[idx] = val;
+}
+
+template <class T_fval>
+void Field<T_fval>::operator=(const Field<T_fval> &B) {
+	if (B.grid->size() != this->grid->size()) {
+		throw ex_cheatExceptionSizeMismatch();
+	}
+	for (int i = 0; i < B.grid->size(); i++) {
+		this->setValue(i, B.getValue(i));
+	}
+}
+
+
 
 template class Field<real>;

@@ -6,7 +6,7 @@
 using namespace std;
 
 /*
-   HELPER FUNCTIONS 
+   HELPER FUNCTIONS
 */
 
 // Product of all (numeric) elements within the vector
