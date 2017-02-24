@@ -4,6 +4,6 @@
 
 using namespace std;
 
-real cb_iniTemp(vector<real> coord, vector<real> params) {                      
+real cb_iniTemp(Point<real> coord, vector<real> params) {                      
 	return coord[0];                                                        
 }                                                                               

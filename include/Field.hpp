@@ -16,15 +16,15 @@ class Field {
 	vector<T_fval> values;  // field values
 	int gridVersion;        // up to which version of grid
 	                        //   the field is synced
-	void setValue(int, T_fval); // direct access set-value
+	void setValue(size_t, T_fval); // direct access set-value
 
 	public:
 	Field<T_fval>(Grid*, string);
 	~Field();
 	string getName();
 	void syncGrid();
-	void setValues(T_fval (&)(vector<real>, vector<real>), vector<real>);
-	T_fval getValue(int) const;
+	void setValues(T_fval (&)(Point<real>, vector<real>), vector<real>);
+	T_fval getValue(size_t) const;
 
 	void operator=(const Field<T_fval> &B);
 

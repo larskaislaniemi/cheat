@@ -9,13 +9,13 @@
 
 using namespace std;
 
-Crust::Crust(vector<int> nx, vector<real> L) {
+Crust::Crust(Point<int> nx, Point<real> L) {
 	cout << "New Crust" << endl;
 	this->grid = new Grid(nx, L);
 }
 
 Crust::~Crust() {
-	for (int i = 0; i < this->fields.size(); i++) {
+	for (size_t i = 0; i < this->fields.size(); i++) {
 		delete this->fields[i];
 	}
 	delete this->grid;
@@ -23,7 +23,7 @@ Crust::~Crust() {
 }
 
 Field<real>* Crust::getField(string fieldName) {
-	for (int i = 0; i < this->fields.size(); i++) {
+	for (size_t i = 0; i < this->fields.size(); i++) {
 		if (this->fields[i]->getName() == fieldName) {
 			return this->fields[i];
 		}
@@ -32,13 +32,13 @@ Field<real>* Crust::getField(string fieldName) {
 }
 
 void Crust::syncFieldsGrid() {
-	for (int i = 0; i < fields.size(); i++) {
+	for (size_t i = 0; i < fields.size(); i++) {
 		fields[i]->syncGrid();
 	}
 }
 
 void Crust::addField(string fieldName) {
-	for (int i = 0; i < this->fields.size(); i++) {
+	for (size_t i = 0; i < this->fields.size(); i++) {
 		if (fieldName == this->fields[i]->getName()) throw ex_cheatExceptionFieldExists();
 	}
 	this->fields.resize(this->fields.size() + 1);
@@ -48,7 +48,7 @@ void Crust::addField(string fieldName) {
 }
 
 void Crust::deleteField(string fieldName) {
-	for (int i = 0; i < this->fields.size(); i++) {
+	for (size_t i = 0; i < this->fields.size(); i++) {
 		if (fieldName == this->fields[i]->getName()) {
 			delete this->fields[i];
 			this->fields.erase(this->fields.begin()+i);

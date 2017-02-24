@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -std=c++11 -g -g -pg    CMakeFiles/cheat.dir/src/Point.cpp.o CMakeFiles/cheat.dir/src/Grid.cpp.o CMakeFiles/cheat.dir/src/Field.cpp.o CMakeFiles/cheat.dir/src/Indep.cpp.o CMakeFiles/cheat.dir/src/Tools.cpp.o CMakeFiles/cheat.dir/src/main.cpp.o CMakeFiles/cheat.dir/src/Crust.cpp.o  -o cheat -rdynamic 

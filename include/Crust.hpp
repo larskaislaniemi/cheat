@@ -15,7 +15,7 @@ class Crust {
 	vector<int> fieldStatus;
 
 	public:
-	Crust(vector<int>, vector<real>);
+	Crust(Point<int>, Point<real>);
 	~Crust();
 	Field<real>* getField(string);
 	void syncFieldsGrid();

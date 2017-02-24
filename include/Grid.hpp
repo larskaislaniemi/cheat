@@ -2,30 +2,31 @@
 #define GRID_H
 
 #include "CHeat.hpp"
+#include "Point.hpp"
 #include <vector>
 
 using namespace std;
 
 class Grid {
 	private:
-	vector<int> nx;	           // num of grid points in each dir
-	vector<real> L;            // physical size in each dir
-	vector< vector<real> > xs; // physical coordinates, each grid point, each dir
+	Point<int> nx;             // num of grid points in each dir
+	Point<real> L;             // physical size in each dir
+	vector< Point<real> > xs;  // physical coordinates, 'Point' for each grid point
 	int version;
 
 	public:
-	Grid (vector<int>, vector<real>);
+	Grid (Point<int>, Point<real>);
 	~Grid();
-	int dim();               // dimension of the grid
-	int size();		 // total size of the grid
+	size_t dim();            // dimension of the grid
+	size_t size();		 // total size of the grid
 
-	int gidx(vector<int>);   // global array index from coordinates
-	vector<int> lidx(int);   // coordinates from global array index
+	size_t gidx(Point<int>); // global array index from coordinates
+	Point<int> lidx(size_t); // coordinates from global array index
 
-	vector<real> getXs(vector<int>);  // physical coords at given grid coords
+	Point<real> getXs(Point<int>);  // physical coords at given grid coords
 
-	void checkCoord(vector<int>);  // checks for making sure input coords 
-	void checkCoord(int);          //   are valid
+	void checkGridCoord(Point<int>);  // checks for making sure input grid 
+	void checkGridCoord(size_t);      //   point is valid
 
 	int getVersion() { return this->version; };
 };

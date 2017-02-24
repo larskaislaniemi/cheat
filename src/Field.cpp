@@ -38,8 +38,8 @@ Field<real>::Field(Grid *grid, string fieldName) {
 }
 
 template <class T_fval>
-void Field<T_fval>::setValues(T_fval (&f)(vector<real>, vector<real>), vector<real>params) {
-	for (int i = 0; i < grid->size(); i++) {
+void Field<T_fval>::setValues(T_fval (&f)(Point<real>, vector<real>), vector<real>params) {
+	for (size_t i = 0; i < grid->size(); i++) {
 		this->values[i] = f(grid->getXs(grid->lidx(i)), params);
 		cout << "z = " << grid->getXs(grid->lidx(i))[0] << ", val = " << this->values[i] << endl;
 	}
@@ -68,12 +68,12 @@ void Field<T_fval>::syncGrid() {
 }
 
 template <class T_fval>
-T_fval Field<T_fval>::getValue(int idx) const {
+T_fval Field<T_fval>::getValue(size_t idx) const {
 	return this->values[idx];
 }
 
 template <class T_fval>
-void Field<T_fval>::setValue(int idx, T_fval val) {
+void Field<T_fval>::setValue(size_t idx, T_fval val) {
 	this->values[idx] = val;
 }
 
@@ -82,11 +82,11 @@ void Field<T_fval>::operator=(const Field<T_fval> &B) {
 	if (B.grid->size() != this->grid->size()) {
 		throw ex_cheatExceptionSizeMismatch();
 	}
-	for (int i = 0; i < B.grid->size(); i++) {
+	for (size_t i = 0; i < B.grid->size(); i++) {
 		this->setValue(i, B.getValue(i));
 	}
 }
 
 
-
 template class Field<real>;
+

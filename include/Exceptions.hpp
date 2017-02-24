@@ -34,4 +34,12 @@ class ex_cheatExceptionSizeMismatch : public ex_cheatException {
 	virtual const char* what() const throw() { return "Grid/array sizes do not match"; }
 };
 
+class ex_cheatExceptionDimMismatch : public ex_cheatException {
+	virtual const char* what() const throw() { return "Dimensions do not match"; }
+};
+
+class ex_cheatExceptionInternalConflict : public ex_cheatException {
+	virtual const char* what() const throw() { return "Internal conflict"; }
+};
+
 #endif

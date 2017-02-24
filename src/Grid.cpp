@@ -11,84 +11,81 @@ Grid::~Grid () {
 	cout << "Grid removed" << endl;
 }
 
-Grid::Grid (vector<int> nx, vector<real> L) {
+Grid::Grid (Point<int> nx, Point<real> L) {
 	cout << "New Grid" << endl;
-	vector<int> lx;
+	Point<int> lx; 
 
 	version = 0;
 
-	if (nx.size() != L.size()) {
-		throw ex_cheatExceptionInvalidParam();
+	if (nx.dim() != L.dim()) {
+		throw ex_cheatExceptionDimMismatch();
 	}
 
 	this->nx = nx;
 	this->L = L;
 
-	this->xs.resize(elemProd(this->nx));
+	this->xs.resize(this->size());
 
-	for (int i = 0; i < elemProd(this->nx); i++) {
-		vector<real> curx(this->dim());
+	for (size_t i = 0; i < this->size(); i++) {
+		Point<real> curx(this->dim());
 		lx = this->lidx(i);
 
-		for (int idim = 0; idim < this->dim(); idim++) {
+		for (size_t idim = 0; idim < this->dim(); idim++) {
 			curx[idim] = this->L[idim] * (real)(lx[idim]) / (real)((this->nx[idim]-1));
 		}
 
+		this->xs[i] = Point<real>(this->dim());
 		this->xs[i] = curx;
 	}
 }
 
-int Grid::size() {
-	return elemProd(this->nx);
-}
+void Grid::checkGridCoord(Point<int> x) {
+	if (x.dim() != this->dim()) throw ex_cheatExceptionCoordCheck();
 
-void Grid::checkCoord(vector<int> x) {
-	if (x.size() != this->nx.size()) throw ex_cheatExceptionCoordCheck();
-
-	for (int idim = 0; idim < this->dim(); idim++) {
+	for (size_t idim = 0; idim < this->dim(); idim++) {
 		if (x[idim] < 0 || x[idim] >= this->nx[idim]) throw ex_cheatExceptionCoordCheck();
 	}
 
 	return;
 }
 
-void Grid::checkCoord(int x) {
-	if (x < 0 || x >= elemProd(this->nx)) throw ex_cheatExceptionCoordCheck();
+void Grid::checkGridCoord(size_t x) {
+	if (x < 0 || x >= this->size()) throw ex_cheatExceptionCoordCheck();
 	return;
 }
 
-vector<real> Grid::getXs(vector<int> lidx) {
-	int gidx;
+Point<real> Grid::getXs(Point<int> lidx) {
+	size_t gidx;
 	
-	this->checkCoord(lidx);
+	this->checkGridCoord(lidx);
 
 	gidx = this->gidx(lidx);
 
 	return this->xs[gidx];
 }
 
-int Grid::gidx (vector<int> x) {
-	int gcoord = 0;
+size_t Grid::gidx (Point<int> x) {
+	size_t gcoord = 0;
 
-	this->checkCoord(x);
+	this->checkGridCoord(x);
 
-	for (int idim = 0; idim < this->dim()-1; idim++) {
-		gcoord = gcoord + x[idim] * elemProd(this->nx, idim+1);
+	for (size_t idim = 0; idim < this->dim()-1; idim++) {
+		gcoord = gcoord + x[idim] * this->nx.prod(idim+1);
 	}
 	gcoord += x[this->dim()-1];
 
 	return gcoord;
 }
 
-vector<int> Grid::lidx (int x) {
-	vector<int> gx(this->dim());
-	int lx = x;
+Point<int> Grid::lidx (size_t x) {
+	Point<int> gx(this->dim());
+	int lx = (int)x;
 
-	this->checkCoord(x);
+	this->checkGridCoord(x);
 
-	for (int idim = 0; idim < this->dim()-1; idim++) {
-		int ep = elemProd(this->nx, idim+1);
-		gx[idim] = (int)(lx / ep);
+	for (size_t idim = 0; idim < this->dim()-1; idim++) {
+		int ep = this->nx.prod(idim+1); 
+		gx[idim] = lx / ep;
 		lx = lx - gx[idim] * ep;
 	}
 	gx[this->dim()-1] = lx;
@@ -96,7 +93,13 @@ vector<int> Grid::lidx (int x) {
 	return gx;
 }
 
-int Grid::dim() {
-	return (int)(this->nx.size());
+size_t Grid::dim() {
+	return this->nx.dim();
 }
 
+size_t Grid::size() {
+	int prod;
+	prod = this->nx.prod();
+	if (prod < 0) throw ex_cheatExceptionInternalConflict();
+	return (size_t)prod;
+}
