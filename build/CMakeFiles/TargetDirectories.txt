@@ -1,3 +1,0 @@
-/home/lkaislan/code/cheat/build/CMakeFiles/edit_cache.dir
-/home/lkaislan/code/cheat/build/CMakeFiles/rebuild_cache.dir
-/home/lkaislan/code/cheat/build/CMakeFiles/cheat.dir

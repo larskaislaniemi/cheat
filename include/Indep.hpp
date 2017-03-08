@@ -7,6 +7,7 @@
 
 using namespace std;
 
-real cb_iniTemp(Point<real>, vector<real>);
+real setIniTemp_cb(Point<real> coord, vector<real> params);
+real setConstValue_cb(Point<real> coord, vector<real> params);
 
 #endif

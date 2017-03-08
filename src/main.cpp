@@ -5,7 +5,6 @@
 #include "Indep.hpp"
 #include "Point.hpp"
 
-
 using namespace std;
 
 /*
@@ -19,29 +18,31 @@ int main (int argc, char *argv[]) {
 
 	Point<int> a, b, c;
 
-	nx[0] = 5; nx[1] = 6; nx[2] = 3;
-	L[idz] = 1.0; L[idx] = 1.0; L[idy] = 1.0;
-	x[idz] = 4;  x[idx] = 5;  x[idy] = 2;
-
-	Point<int> xx {1,2,3};
+	nx[IX] = 10; nx[IY] = 10; nx[IZ] = 40;
+	L[IX] = 50e3; L[IY] = 50e3; L[IZ] = 100e3;
 
 	cr = new Crust(nx, L);
-	cr->addField("test");
-	cr->addField("test2");
-	*(cr->getField("test")) = *(cr->getField("test2"));
-	cr->deleteField("test");
+
+	cr->addField("temperature");
+	cr->addField("heat conductivity");
+	cr->addField("heat capacity");
+	cr->addField("density");
+
+	cr->getField("temperature")->setValues(setIniTemp_cb, vector<real>{ 1, 10.0 });
+	cr->getField("heat conductivity")->setValues(setConstValue_cb, vector<real>{ 2.5 });
+	cr->getField("heat capacity")->setValues(setConstValue_cb, vector<real>{ 800 });
+	cr->getField("density")->setValues(setConstValue_cb, vector<real>{ 2800 });
+
 	delete cr;
-	cr = new Crust(nx, L);
-	cr->addField("koe");
-
-	cr->getField("koe")->setValues(cb_iniTemp, vector<real> { L[0] });
-
-	a = Point<int>({1,2,3});
-	b = Point<int>({4,5,6});
-	c = b;
-	b[1] = 9;
-	cout << c[1] << endl;
-	//while(true) {}
 
 	return 0;
 }
+
+/* Examples of usage */
+/*
+	x[idz] = 4;  x[idx] = 5;  x[idy] = 2;
+	Point<int> xx {1,2,3};
+	cr->deleteField("test");
+	cr->getField("koe")->setValues(cb_iniTemp, vector<real> { L[0] });
+
+*/

@@ -41,7 +41,6 @@ template <class T_fval>
 void Field<T_fval>::setValues(T_fval (&f)(Point<real>, vector<real>), vector<real>params) {
 	for (size_t i = 0; i < grid->size(); i++) {
 		this->values[i] = f(grid->getXs(grid->lidx(i)), params);
-		cout << "z = " << grid->getXs(grid->lidx(i))[0] << ", val = " << this->values[i] << endl;
 	}
 }
 
